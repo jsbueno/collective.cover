@@ -267,8 +267,9 @@ class PersistentCoverTile(tiles.PersistentTile, ESITile):
         user_roles = user.getRoles()
         groups = self.getAllowedGroupsForEdit()
 
-        if groups and 'Manager' not in user_roles:
-            if not set(user.getGroups()).intersection(set(groups)):
+        if 'Manager' not in user_roles:
+            if (not user.getId() or
+                    not set(user.getGroups()).intersection(set(groups))):
                 allowed = False
 
         return allowed
